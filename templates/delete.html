@@ -1,0 +1,25 @@
+{% extends 'default.html' %}
+
+{% load static %}
+
+{% block style %}<link type="text/css" href="{% static 'css/delete.css' %}" rel="stylesheet" />{% endblock style %}
+
+{% block title %} {{ post.title }} {% endblock title %}
+
+
+{% block content %}
+<div id="block_form">
+    <form method="post" class="form">
+        {% csrf_token %}
+        <div class="title">{{ post.title }}</div>
+        <div class="label">Вы уверены что хотите удалить эту запись?</div>
+        <div class="confirm">
+            <a href="{% url 'posts' %}" id="cancel">Отмена</a>
+            <input type="submit" value="Удалить" id="button">
+        </div>
+</div>
+    
+</form>
+{% endblock content %}
+
+{% block footer %}{% endblock footer %}

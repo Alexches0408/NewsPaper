@@ -18,6 +18,17 @@ header {
     z-index: 1;
 }
 
+.main_content{
+    position: relative;
+}
+
+#posts_wind{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
+}
+
 #icon {
     font-family: 'Itim';
     font-style: normal;
@@ -47,11 +58,12 @@ header {
 }
 
 .main_content {
+    display: flex;
     background: url(../assets/back.png);
     background-size: cover;
     background-color: grey;
     background-blend-mode: luminosity;
-    min-height: 52em;
+    min-height: 54em;
     padding-bottom: 80px;
     padding-top: 110px;
 }
@@ -108,144 +120,26 @@ footer {
     padding-right: 20px;
 }
 
-/* Для страницы со списком постов */
 
-#post_length{
-    position: relative;
-    margin-left: 70px;
-    bottom: 20px;
+/* Для паджинатора */
+.page_list{
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 8px 12px;
-    gap: 10px;
-    background: #727272;
-    border-radius: 15px;
-    width: fit-content;
-    height: 40px;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 25px;
-    line-height: 24px;
-    color:white;
-}
-
-.posts_wrapper {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 341px);
-    grid-auto-flow: row dense;
     justify-content: center;
-    grid-column-gap: 50px;
-    grid-row-gap: 30px;
-    justify-items: stretch;
-    align-items: stretch;
-    padding-left: 20px;
-    padding-right: 20px;
-
-}
-
-.posts {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 8px;
-    gap: 12px;
-    width: 341px;
-    height: 379px;
-    border: 1px solid #9E9A9A;
+    font-size: 24px;
+    background-color: #FFFFFF;
+    width: 250px;
+    margin: 12px auto;
+    height: 30px;
+    border: 1px solid grey;
     border-radius: 15px;
-    background: #FFFFFF;
 }
 
-.posts_title {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 40px;
-    line-height: 35px;
-    margin-bottom: 15px;
+.page_list>*{
+    padding: 0 5px;
+    color: #000000;
+    text-decoration: none;
 }
 
-.posts_pubdate {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 15px;
-    color: #6B6B6B;
-    margin-bottom: 5px;
+.current{
+    text-decoration: underline;
 }
-
-.posts_content {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 30px;
-    line-height: 30px;
-}
-
-.posts_rating {
-    position: absolute;
-    bottom: 10px;
-    right: 15px;
-    display: flex;
-    align-items: center;
-}
-
-.rating_amount {
-    margin-left: 5px;
-}
-
-/* Для отдельных постов */
-
-.post {
-    position: relative;
-    width: 95%;
-    height: 90%;
-    background: #FFFFFF;
-    border: 1px solid #D9D7D7;
-    border-radius: 15px;
-    padding: 20px;
-    margin: 0 auto;
-}
-
-.post_title {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 60px;
-    line-height: 60px;
-    
-}
-
-.post_pubdate {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
-    color: #6B6B6B;
-    padding-left: 5px;
-    margin-bottom: 15px;
-}
-
-.post_content {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 30px;
-    line-height: 30px;
-}
-
-.post_author {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-
-    color: #858585;
-}
-

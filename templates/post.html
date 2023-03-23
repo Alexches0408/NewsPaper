@@ -1,5 +1,8 @@
 {% extends 'default.html' %}
 
+{% load static %}
+
+{% block style %}<link type="text/css" href="{% static 'css/detail.css' %}" rel="stylesheet" />{% endblock style %}
 {% block title %} {{ post.title }} {% endblock title %}
 
 

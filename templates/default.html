@@ -6,11 +6,13 @@
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock title %}</title>
     <link type="text/css" href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    {% block style %}
+    {% endblock style %}
 </head>
 <body>
     <header>
         <div id="icon">News</div>
-        <div class="category"><a href="#">Новости</a></div>
+        <div class="category"><a href="{% url 'posts' %}">Новости</a></div>
         <div class="category"><a href="#">Истории</a></div>
         <div class="category"><a href="#">Спецпроекты</a></div>
         <div class="category"><a href="#">Реклама</a></div>
