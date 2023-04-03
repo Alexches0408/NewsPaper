@@ -140,3 +140,21 @@
 .rating_amount {
     margin-left: 5px;
 }
+
+#author{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: black;
+    height: 100%;
+    width: 100%;
+}
+
+.logout_btn{
+    font-weight: 700;
+}

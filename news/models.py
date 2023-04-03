@@ -1,6 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from datetime import datetime
+
+
 
 # Create your models here.
 
@@ -29,9 +31,6 @@ class Author(models.Model):
 
     def __str__(self):
         return f'{self.user}'
-
-
-
 
 class Category(models.Model):
     category = models.CharField(max_length=128, unique=True)
@@ -88,6 +87,4 @@ class Comment(models.Model):
         # rating = self.rating
         self.rating -= 1 if self.rating > 0 else 0
         self.save()
-
-
 

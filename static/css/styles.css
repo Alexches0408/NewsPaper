@@ -57,6 +57,10 @@ header {
     width: 100%;
 }
 
+#logout_btn{
+    font-weight: 700;
+}
+
 .main_content {
     display: flex;
     background: url(../assets/back.png);

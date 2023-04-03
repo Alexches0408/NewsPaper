@@ -12,11 +12,15 @@
 <body>
     <header>
         <div id="icon">News</div>
-        <div class="category"><a href="{% url 'posts' %}">Новости</a></div>
+        <div class="category"><a href="{% url 'posts' %}" style="font-weight: 700;">Новости</a></div>
         <div class="category"><a href="#">Истории</a></div>
         <div class="category"><a href="#">Спецпроекты</a></div>
         <div class="category"><a href="#">Реклама</a></div>
         <div class="category"><a href="#">Мероприятия</a></div>
+        <div class="category"><a href="{% url 'logout' %}" style="font-weight: 700;">Разлогиниться</a></div>
+        {% if is_not_author %}
+        <div class="cetegory"><a href="/accounts/upgrade/" id="author">Стать автором</a></div>
+        {% endif %}
     </header>
     <section class="main_content">
         {% block content %}
