@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 
+from decouple import config
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,7 +32,7 @@ SECRET_KEY = 'django-insecure-6cru)$ote#z_j+o5*$^@v_6q*m9)%-zrd#v4veib8aymdbbs3u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -50,11 +52,15 @@ INSTALLED_APPS = [
     'news',
     'accounts',
     'django_filters',
+    'django_apscheduler',
 ]
 
 SITE_ID = 1
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
+
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 25
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -140,11 +146,22 @@ SOCIALACCOUNT_PROVIDERS ={
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/news/'
 
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = config("ACCOUNT_EMAIL_REQUIRED")
+ACCOUNT_UNIQUE_EMAIL = config("ACCOUNT_UNIQUE_EMAIL")
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_AUTHENTICATION_METHOD = config("ACCOUNT_AUTHENTICATION_METHOD")
+ACCOUNT_EMAIL_VERIFICATION = config("ACCOUNT_EMAIL_VERIFICATION")
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_HOST = config("EMAIL_HOST")
+EMAIL_PORT = config("EMAIL_PORT")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_USE_SSL = config("EMAIL_USE_SSL")
+
+DEFAULT_FROM_EMAIL = config("EMAIL_HOST_USER")
+
+# SERVER_EMAIL = config("SERVER_EMAIL")
 
 ACCOUNT_FORMS = {'signup': 'accounts.forms.CommonSignupForm'}
 
@@ -169,3 +186,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

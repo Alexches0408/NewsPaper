@@ -1,0 +1,28 @@
+{% extends 'default.html' %}
+{% load static %}
+
+{% block title %}
+Личный кабинет
+{% endblock title %}
+
+{% block content %}
+<div class="content" style="display: flex; flex-direction: column;">
+    <h1>Hi {{ user.username }}!</h1>
+    <p>It's your personal page</p>
+    <p>You subscribe:</p>
+    <div class="subscribes" style="display: flex; flex-direction: column;">
+        {% for category in categories %}
+            {% for subscribe in category.subscribers.all %}
+                {% if subscribe == user %}
+                    <div class="subscribe_block" style="display: flex;">
+                        <div>{{ category.category }}</div>
+                        <div><a href="{% url 'news:unsubscribe' category.id %}">Отписаться</a></div>
+                    </div>
+
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

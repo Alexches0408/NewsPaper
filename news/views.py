@@ -1,11 +1,18 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.urls import resolve
+from django.shortcuts import redirect
+from django.core.mail import EmailMultiAlternatives
+from django.views import View
 
+from django.template.loader import render_to_string
 
-from .models import Post
+from .models import Post, Category, PostCategory, User
 from .filters import PostFilter
 from .forms import PostForm
+from django.conf import settings
+DEFAULT_FROM_EMAIL = settings.DEFAULT_FROM_EMAIL
 
 class PostList(LoginRequiredMixin, ListView):
     model = Post
@@ -56,4 +63,84 @@ class DeletePostView(LoginRequiredMixin, DeleteView):
     queryset = Post.objects.all()
     success_url = '/news/'
 
+class CategoryPostList(ListView):
+    model = Post
+    template_name = 'category/category_posts.html'
+    context_object_name = 'posts'
+    paginate_by = 10
 
+    def get_queryset(self):
+        self.id = resolve(self.request.path_info).kwargs['pk']
+        cat = Category.objects.get(id=self.id)
+        queryset = Post.objects.filter(category=cat).order_by('-pub_date')
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        category = Category.objects.get(id=self.id)
+        subscribed = category.subscribers.filter(email=user.email)
+        context['category'] = category
+        if subscribed:
+            context['subscribed'] = 1
+        return context
+
+def subscribe_to_category(request, pk):
+    user = request.user
+    category = Category.objects.get(id=pk)
+    if not category.subscribers.filter(id=user.id).exists():
+        email = user.email
+        category.subscribers.add(user)
+        html = render_to_string(
+            'subscribe/subscriber.html',
+            {
+                'category': category,
+                'user': user,
+            }
+        )
+
+        msg = EmailMultiAlternatives(
+            subject=f'{category} subscribe',
+            from_email=DEFAULT_FROM_EMAIL,
+            body='',
+            to=[email,],
+        )
+        msg.attach_alternative(html, 'text/html')
+        msg.send()
+        return redirect(request.META.get('HTTP_REFERER'))
+    return redirect(request.META.get('HTTP_REFERER'))
+
+def unsubscribe_from_category(request, pk):
+    user = request.user
+    category = Category.objects.get(id=pk)
+    if category.subscribers.filter(id=user.id).exists():
+        category.subscribers.remove(user)
+        # html = render_to_string(
+        #     'mail/subscriber',
+        #     {
+        #         'category': category,
+        #         'user': user,
+        #     }
+        # )
+        #
+        # msg = EmailMultiAlternatives(
+        #     subject=f'{category} subscribe',
+        #     from_email='',
+        #     body='',
+        #     to=[email,]
+        # )
+        # msg.send()
+
+    return redirect(request.META.get('HTTP_REFERER'))
+
+class UserProfile(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = 'accounts/profile.html'
+    context_object_name = 'user'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        categories = Category.objects.all()
+        context['categories'] = categories
+        return context
