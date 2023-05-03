@@ -5,8 +5,48 @@
 Личный кабинет
 {% endblock title %}
 
+{% block style %}
+<link type="text/css" href="{% static 'css/accounts/profile.css' %}" rel="stylesheet" />
+{% endblock style %}
+
 {% block content %}
-<div class="content" style="display: flex; flex-direction: column;">
+<div class="topProfilePage">
+    <img src="{% static 'assets/avatar.png' %}" alt="avatar" width="125px" height="125px">
+    <div class="user_info">
+        <div class="userName">{{ user.username }}</div>
+        <div class="status">{{ status }}</div>
+        <button id="edit_profile">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.8 16.5514H16.8M1.20007 16.5514L5.56606 15.6717C5.79784 15.625 6.01065 15.5109 6.17779 15.3437L15.9515 5.56461C16.4201 5.09576 16.4197 4.33577 15.9508 3.86731L13.8803 1.79923C13.4115 1.33097 12.6519 1.33129 12.1835 1.79995L2.40884 11.58C2.24202 11.7469 2.12812 11.9593 2.08138 12.1906L1.20007 16.5514Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span id="edit_profile_caption">Редактировать профиль</span>
+        </button>
+    </div>
+        <div class="profile_search">
+            <span>Поиск...</span>
+            <img src="{% static 'assets/search.png' %}" alt="search" width="17px" height="17px">
+        </div>
+        <div class="profileMessages">
+            <img src="{% static 'assets/message.png' %}" alt="search" width="17px" height="17px">
+        </div>
+        <div class="profileNotifications">
+            <img src="{% static 'assets/notify.png' %}" alt="search" width="17px" height="17px">
+        </div>
+        <div class="exitBtn">
+            <a href="{% url 'news:logout' %}" style="font-weight: 700;">Выход</a>
+        </div>
+    </div>
+    <div class="userInfoWindow">
+
+</div>
+
+
+
+
+
+
+
+<!-- <div class="content" style="display: flex; flex-direction: column;">
     <h1>Hi {{ user.username }}!</h1>
     <p>It's your personal page</p>
     <p>You subscribe:</p>
@@ -23,6 +63,6 @@
             {% endfor %}
         {% endfor %}
     </div>
-</div>
+</div> -->
 
-{% endblock content %}
+{% endblock content %}  

@@ -1,0 +1,78 @@
+.topProfilePage{
+    display: flex;
+}
+
+.user_info{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 17px;
+    width: 234px;
+    height: 144px;
+    background: rgba(112, 112, 112, 0.77);
+    border-radius: 15px;
+}
+
+.userName{
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    color: #FFFFFF;
+    margin-bottom: 25px;
+}
+
+.status{
+    font-family: 'Itim';
+    font-weight: 200;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    margin-bottom: 25px;
+}
+
+#edit_profile{
+    background: none;
+}
+
+#edit_profile_caption{
+    font-family: 'Itim';
+    font-weight: 400;
+    font-size: 14px;
+    text-decoration-line: underline;
+    color: #FFFFFF;
+    margin-left: 15px;
+}
+
+.profile_search{
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    width: 611px;
+    height: 40px;
+    background: rgba(210, 210, 210, 0.59);
+    border-radius: 15px;
+}
+
+.profile_search>span{
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 20px;
+    color: #FFFFFF;
+}
+
+.exitBtn>a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 12px;
+    width: 87px;
+    height: 40px;
+    background: #B9DEF2;
+    border-radius: 15px;
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 20px;
+    color: #000000;
+    text-decoration: none;
+}

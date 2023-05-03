@@ -5,6 +5,7 @@ from django.urls import resolve
 from django.shortcuts import redirect
 from django.core.mail import EmailMultiAlternatives
 from django.views import View
+from django.contrib.auth.models import Group
 
 from django.template.loader import render_to_string
 
@@ -61,7 +62,7 @@ class UpdatePostView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 class DeletePostView(LoginRequiredMixin, DeleteView):
     template_name = 'delete.html'
     queryset = Post.objects.all()
-    success_url = '/news/'
+    success_url = '/'
 
 class CategoryPostList(ListView):
     model = Post
@@ -143,4 +144,8 @@ class UserProfile(LoginRequiredMixin, DetailView):
         user = self.request.user
         categories = Category.objects.all()
         context['categories'] = categories
+        if not user.groups.filter(name='authors').exists():
+            context['status'] = "Читатель"
+        else:
+            context['status'] = "Автор"
         return context

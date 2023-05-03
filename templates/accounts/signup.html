@@ -9,7 +9,7 @@
     <form action="{% url 'account_signup' %}" method="post" class="login_form">
         {% csrf_token %}
         <div class="top_form">
-            <div class="form_login_label form_top_label" onclick="location.href='{% url 'accounts_login' %}'">Вход</div>
+            <div class="form_login_label form_top_label" onclick="location.href='{% url 'account:accounts_login' %}'">Вход</div>
             <div class="form_signup_label form_top_label">Регистрация</div>
         </div>
         <div class="content_form">
