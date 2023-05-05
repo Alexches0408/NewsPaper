@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 
 from allauth.account.views import LoginView, SignupView, LogoutView
 from allauth.account.forms import LoginForm, SignupForm
 
+from news.models import Author
 
 # Create your views here.
 
@@ -27,5 +28,6 @@ def upgrade_me(request):
     author_group = Group.objects.get(name='authors')
     if not request.user.groups.filter(name='authors').exists():
         author_group.user_set.add(user)
-    return redirect('/news/')
+        Author.objects.create(user = user)
+    return redirect('/')
 

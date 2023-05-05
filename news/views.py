@@ -9,7 +9,7 @@ from django.contrib.auth.models import Group
 
 from django.template.loader import render_to_string
 
-from .models import Post, Category, PostCategory, User
+from .models import Post, Category, PostCategory, User, Author
 from .filters import PostFilter
 from .forms import PostForm
 from django.conf import settings
@@ -142,10 +142,32 @@ class UserProfile(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
-        categories = Category.objects.all()
+        categories = []
+        for category in Category.objects.all():
+            for subscribe in category.subscribers.all():
+                if subscribe==user:
+                    categories.append(category)
         context['categories'] = categories
+        posts = {}
+        for category in categories:
+            posts[category]=[]
+            for post in Post.objects.all():
+                for cat in post.category.all():
+                    if cat == category:
+                        posts[category].append(post)
+        context['posts'] = posts
+
+
+
+
         if not user.groups.filter(name='authors').exists():
             context['status'] = "Читатель"
+            context['author_posts'] = None
         else:
             context['status'] = "Автор"
+            author_posts = []
+            for post in Post.objects.all():
+                if str(post.author) == str(user):
+                    author_posts.append(post)
+            context['author_posts'] = author_posts
         return context

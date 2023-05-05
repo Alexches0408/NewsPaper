@@ -7,7 +7,7 @@ app_name='news'
 
 urlpatterns =[
     path('', PostList.as_view(), name='posts'),
-    path('<int:pk>', PostDetail.as_view(), name='post_detail'),
+    path('news/<int:pk>', PostDetail.as_view(), name='post_detail'),
     path('search', PostSearch.as_view()),
     path('add', CreatePostView.as_view(), name='post_create'),
     path('<int:pk>/edit/', UpdatePostView.as_view(), name='post_update'),
