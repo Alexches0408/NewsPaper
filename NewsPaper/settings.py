@@ -30,7 +30,7 @@ STATICFILES_DIRS = [
 SECRET_KEY = 'django-insecure-6cru)$ote#z_j+o5*$^@v_6q*m9)%-zrd#v4veib8aymdbbs3u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(" ")
 
@@ -164,7 +164,7 @@ DEFAULT_FROM_EMAIL = config("EMAIL_HOST_USER")
 # SERVER_EMAIL = config("SERVER_EMAIL")
 
 ACCOUNT_FORMS = {'signup': 'accounts.forms.CommonSignupForm'}
-
+ADMINS = [('Test', 'test@example.com')]
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -187,3 +187,109 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console_debug': {
+            'format': '{asctime} {levelname} {message}',
+            'style': '{'
+        },
+        'console_warning': {
+            'format': '{pathname}',
+            'style': '{'
+        },
+        'console_error': {
+            'format': '{exc_info}',
+            'style': '{'
+        },
+        'file': {
+            'format': '{asctime} {levelname} {module} {message}',
+            'style': '{'
+        },
+        'file_request': {
+            'format': '{asctime} {levelname} {message} {pathname} {exc_info}',
+            'style': '{'
+        },
+        'mail': {
+            'format': '{asctime} {levelname} {message} {pathname}',
+            'style': '{'
+        }
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        }
+    },
+    'handlers': {
+        'console_debug': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'console_debug',
+            'filters': ['require_debug_true']
+        },
+        'console_warning': {
+            'level': 'WARNING',
+            'class': 'logging.StreamHandler',
+            'formatter': 'console_warning',
+            'filters': ['require_debug_true']
+        },
+        'console_error': {
+            'level': 'ERROR',
+            'class': 'logging.StreamHandler',
+            'formatter': 'console_error',
+            'filters': ['require_debug_true']
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'log/general.log',
+            'formatter': 'file',
+            'filters': ['require_debug_false']
+        },
+        'request_error': {
+            'class': 'logging.FileHandler',
+            'filename': 'log/error.log',
+            'formatter': 'file_request'
+        },
+        'security_error': {
+            'class': 'logging.FileHandler',
+            'filename': 'log/security.log',
+            'formatter': 'file'
+        },
+        'mail': {
+            'class': 'django.utils.log.AdminEmailHandler',
+            'formatter': 'mail',
+            'filters': ['require_debug_false']
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console_debug', 'console_warning', 'console_error', 'file']
+        },
+        'django.request': {
+            'level': 'ERROR',
+            'handlers': ['request_error', 'mail']
+        },
+        'django.server': {
+            'level': 'ERROR',
+            'handlers': ['request_error', 'mail']
+        },
+        'django.template': {
+            'level': 'ERROR',
+            'handlers': ['request_error']
+        },
+        'django.db_backends': {
+            'level': 'ERROR',
+            'handlers': ['request_error']
+        },
+        'django.security': {
+            'level': 'ERROR',
+            'handlers': ['security_error']
+        },
+    }
+
+}
